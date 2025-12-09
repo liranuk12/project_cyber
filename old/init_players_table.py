@@ -4,7 +4,7 @@ import sqlite3
 db_path = "players.db"
 
 # Path to the SQL file you want to run
-sql_file_path = "players.sql"
+# sql_file_path = "players.sql"
 
 def run_sql_file(db_path, sql_file_path):
     # Connect to the SQLite database
