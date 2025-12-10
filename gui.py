@@ -3,6 +3,9 @@ from tkinter import messagebox
 from client import Client
 import time
 
+from formation import FormationGUI
+
+
 class LoginGUI:
     def __init__(self):
         self.client = Client()
@@ -104,7 +107,8 @@ class LoginGUI:
         if self.mode == "login":
             response = self.client.login(username, password)
             if response == "LOGIN_SUCCESS":
-                messagebox.showinfo("Success", f"Welcome {username}!")
+                self.root.destroy()  # סוגר את חלון הלוגין
+                MainMenuGUI(username)  # פותח את החלון החדש
             else:
                 messagebox.showerror("Failed", "Incorrect username or password")
         else:
@@ -114,6 +118,31 @@ class LoginGUI:
                 self.switch_mode()
             else:
                 messagebox.showerror("Failed", "Username already exists!")
+
+
+class MainMenuGUI:
+    def __init__(self, username):
+        self.root = tk.Tk()
+        self.root.title("FUTRADE - Main Panel")
+        self.root.geometry("480x520")
+        self.root.configure(bg="#0b0c10")
+        self.root.resizable(False, False)
+
+        tk.Label(self.root, text=f"Welcome {username}", font=("Arial", 24, "bold"),
+                 fg="#00ff7f", bg="#0b0c10").pack(pady=40)
+
+        # כפתורים B1 B2 B3
+        btn_style = dict(font=("Arial", 16, "bold"), bg="#1f2833",
+                         fg="#00ff7f", relief="flat", width=18, height=2)
+
+        tk.Button(self.root, text="SQUAD", **btn_style, command=lambda: FormationGUI("fd")).pack(pady=15)
+        tk.Button(self.root, text="B2", **btn_style, command=lambda: print("B2 Clicked")).pack(pady=15)
+        tk.Button(self.root, text="B3", **btn_style, command=lambda: print("B3 Clicked")).pack(pady=15)
+
+        tk.Label(self.root, text="© 2025 FUTRADE Project", font=("Arial", 10),
+                 fg="#c5c6c7", bg="#0b0c10").pack(side="bottom", pady=15)
+
+        self.root.mainloop()
 
 if __name__ == "__main__":
     LoginGUI()
