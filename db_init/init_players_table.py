@@ -25,4 +25,5 @@ def run_sql_file(db_path, sql_file_path):
     print("SQL script executed successfully!")
 
 if __name__ == "__main__":
-    run_sql_file(db_path, sql_file_path)
+    #run_sql_file(db_path, sql_file_path)
+    run_sql_file()

@@ -17,7 +17,7 @@ class Server:
 
     def setup_database(self):
         """יוצר את טבלת המשתמשים במסד הנתונים"""
-        conn = sqlite3.connect("users.db")
+        conn = sqlite3.connect("db_init/users.db")
         c = conn.cursor()
         c.execute('''CREATE TABLE IF NOT EXISTS users (
                         username TEXT PRIMARY KEY,
@@ -60,7 +60,7 @@ class Server:
 
     def verify_user(self, username, password):
         """בודק אם המשתמש קיים במסד הנתונים"""
-        conn = sqlite3.connect("users.db")
+        conn = sqlite3.connect("db_init/users.db")
         c = conn.cursor()
         hashed_password = '1'+hashlib.sha256(password.encode()).hexdigest()
         c.execute("SELECT * FROM users WHERE username=? AND password=?", (username, hashed_password))
@@ -71,7 +71,7 @@ class Server:
     def add_user(self, username, password):
         """מוסיף משתמש חדש למסד הנתונים"""
         try:
-            conn = sqlite3.connect("users.db")
+            conn = sqlite3.connect("db_init/users.db")
             c = conn.cursor()
             hashed_password = '1'+hashlib.sha256(password.encode()).hexdigest()
             c.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, hashed_password))
