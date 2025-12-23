@@ -1,7 +1,7 @@
 import sqlite3
 
 # Path to your database file (will be created if not exists)
-db_path = "players.db"
+db_path = "users.db"
 
 # Path to the SQL file you want to run
 sql_file_path = "players.sql"
@@ -25,5 +25,5 @@ def run_sql_file(db_path, sql_file_path):
     print("SQL script executed successfully!")
 
 if __name__ == "__main__":
-    #run_sql_file(db_path, sql_file_path)
-    run_sql_file()
+    run_sql_file(db_path, sql_file_path)
+    # run_sql_file()

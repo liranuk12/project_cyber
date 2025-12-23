@@ -1,5 +1,16 @@
+PRAGMA foreign_keys = ON;
+
+-- ========================
+-- DROP TABLES (ORDER MATTERS)
+-- ========================
+
+DROP TABLE IF EXISTS user_players;
+DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS players;
 
+-- ========================
+-- PLAYERS TABLE (שלך, ללא שינוי)
+-- ========================
 CREATE TABLE players (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   first_name VARCHAR(100),
@@ -14,8 +25,53 @@ CREATE TABLE players (
   possession TINYINT
 );
 
--- INSERTS (id as NULL for autoincrement)
+-- ========================
+-- USERS TABLE
+-- ========================
+CREATE TABLE users (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  username TEXT NOT NULL UNIQUE,
+  password TEXT NOT NULL
+);
+
+
+-- ========================
+-- USER ↔ PLAYER (MANY TO MANY)
+-- ========================
+CREATE TABLE user_players (
+  user_id INTEGER NOT NULL,
+  player_id INTEGER NOT NULL,
+
+  PRIMARY KEY (user_id, player_id),
+
+  FOREIGN KEY (user_id) REFERENCES users(id),
+  FOREIGN KEY (player_id) REFERENCES players(id)
+);
+
+-- ========================
+-- PLAYERS DATA (כמו אצלך)
+-- ========================
 INSERT INTO players VALUES (NULL,'Jordi','Alba','ESP','LB','Inter Miami','miami.png','alba.jpg',70,72,78);
+INSERT INTO players VALUES (NULL, 'Jude','Bellingham','ENG','CM','Real Madrid','real_madrid.png','bellingham.jpg',90,65,86);
+
+-- ========================
+-- USERS DATA (דוגמה)
+-- ========================
+--INSERT INTO users (username) VALUES
+--('liran', ),
+--('jeremy');
+--
+---- ========================
+---- USER ↔ PLAYER LINKS
+---- ========================
+---- liran בחר את Jordi Alba (id = 1)
+INSERT INTO user_players (user_id, player_id) VALUES
+(1, 1);
+INSERT INTO user_players (user_id, player_id) VALUES
+(1, 2);
+---- jeremy גם בחר את Jordi Alba
+--INSERT INTO user_players (user_id, player_id) VALUES
+--(2, 1);
 --INSERT INTO players VALUES ('Cristiano','Ronaldo','PRT','ST','Al Nassr','alNassr.png','alNassr.png','ronaldo.jpg',94,40,72);
 --INSERT INTO players VALUES ('Ronald','Araújo','URU','CB','Barcelona','barca.png','araujo.jpg',70,88,62);
 --INSERT INTO players VALUES ('Gabriel','Magalhães','BRA','CB','Arsenal','arsenal.png','arsenal.png','arsenal.png'); -- placeholder in case you want
