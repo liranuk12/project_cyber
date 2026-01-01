@@ -1,7 +1,10 @@
+import json
 import socket
 import threading
 import sqlite3
 import hashlib
+
+from DBHelper import DBHelper
 
 class Server:
     def __init__(self, host="127.0.0.1", port=5555):
@@ -17,7 +20,7 @@ class Server:
 
     def setup_database(self):
         """יוצר את טבלת המשתמשים במסד הנתונים"""
-        conn = sqlite3.connect("db_init/users.db")
+        conn = sqlite3.connect("db/users.db")
         c = conn.cursor()
         c.execute('''CREATE TABLE IF NOT EXISTS users (
                         username TEXT PRIMARY KEY,
@@ -37,20 +40,43 @@ class Server:
 
                 if command == "LOGIN":
                     username, password = params
-                    if self.verify_user(username, password):
-                        conn.send("LOGIN_SUCCESS".encode())
+                    if DBHelper.verify_user(username, password):
+                        conn.sendall(b"LOGIN_SUCCESS")
                     else:
-                        conn.send("LOGIN_FAILED".encode())
+                        conn.sendall(b"LOGIN_FAILED")
 
                 elif command == "SIGNUP":
                     username, password = params
-                    if self.add_user(username, password):
-                        conn.send("SIGNUP_SUCCESS".encode())
+                    if DBHelper.add_user(username, password):
+                        conn.sendall(b"SIGNUP_SUCCESS")
                     else:
-                        conn.send("SIGNUP_FAILED".encode())
+                        conn.sendall(b"SIGNUP_FAILED")
+
+                elif command == "MARKET":
+                    players = DBHelper.load_missing_players()
+
+                    response = {
+                        "status": "OK",
+                        "players": players
+                    }
+
+                    json_data = json.dumps(response)
+                    conn.sendall(json_data.encode())
+
+                elif command == "BUY_PLAYER":
+                    user_id, player_id = params
+                    success = DBHelper.buy_player(user_id, int(player_id))
+
+                    if success:
+                        conn.sendall(b"BUY_SUCCESS")
+                    else:
+                        conn.sendall(b"BUY_FAILED")
+
+
 
                 else:
-                    conn.send("UNKNOWN_COMMAND".encode())
+                    conn.sendall(b"UNKNOWN_COMMAND")
+
 
             except:
                 break
@@ -60,7 +86,7 @@ class Server:
 
     def verify_user(self, username, password):
         """בודק אם המשתמש קיים במסד הנתונים"""
-        conn = sqlite3.connect("db_init/users.db")
+        conn = sqlite3.connect("db/users.db")
         c = conn.cursor()
         hashed_password = '1'+hashlib.sha256(password.encode()).hexdigest()
         c.execute("SELECT * FROM users WHERE username=? AND password=?", (username, hashed_password))
@@ -71,7 +97,7 @@ class Server:
     def add_user(self, username, password):
         """מוסיף משתמש חדש למסד הנתונים"""
         try:
-            conn = sqlite3.connect("db_init/users.db")
+            conn = sqlite3.connect("db/users.db")
             c = conn.cursor()
             hashed_password = '1'+hashlib.sha256(password.encode()).hexdigest()
             c.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, hashed_password))
@@ -80,6 +106,7 @@ class Server:
             return True
         except sqlite3.IntegrityError:
             return False
+
 
     def run(self):
         print("🖥️ Waiting for connections...")

@@ -51,8 +51,58 @@ CREATE TABLE user_players (
 -- ========================
 -- PLAYERS DATA (כמו אצלך)
 -- ========================
-INSERT INTO players VALUES (NULL,'Jordi','Alba','ESP','LB','Inter Miami','miami.png','alba.jpg',70,72,78);
-INSERT INTO players VALUES (NULL, 'Jude','Bellingham','ENG','CM','Real Madrid','real_madrid.png','bellingham.jpg',90,65,86);
+INSERT INTO players VALUES
+(NULL,'Lionel','Messi','ARG','RW','Inter Miami','miami.png','messi.jpg',95,40,96),
+(NULL,'Luis','Suarez','URU','ST','Inter Miami','miami.png','suarez.jpg',88,45,80),
+(NULL,'Sergio','Busquets','ESP','CDM','Inter Miami','miami.png','busquets.jpg',65,85,88),
+
+(NULL,'Cristiano','Ronaldo','POR','ST','Al Nassr','alNassr.png','ronaldo.jpg',92,45,85),
+(NULL,'Sadio','Mane','SEN','LW','Al Nassr','alNassr.png','mane.jpg',88,60,82),
+
+(NULL,'Jude','Bellingham','ENG','CM','Real Madrid','real_madrid.png','bellingham.jpg',90,70,86),
+(NULL,'Federico','Valverde','URU','CM','Real Madrid','real_madrid.png','valverde.jpg',85,80,84),
+(NULL,'Arda','Guler','TUR','AM','Real Madrid','real_madrid.png','guler.jpg',82,55,83),
+(NULL,'Thibaut','Courtois','BEL','GK','Real Madrid','real_madrid.png','courtois.jpg',30,95,50),
+
+(NULL,'Kylian','Mbappe','FRA','ST','PSG','psg.png','mbappe.jpg',95,45,88),
+(NULL,'Marquinhos','Liran','BRA','CB','PSG','psg.png','marquinhos.jpg',65,90,80),
+(NULL,'Vitinha','Liran','POR','CM','PSG','psg.png','vitinha.jpg',78,70,85),
+(NULL,'Nuno','Mendes','POR','LB','PSG','psg.png','mendes.jpg',80,78,82),
+
+(NULL,'Robert','Lewandowski','POL','ST','Barcelona','barca.png','lewandowski.jpg',92,45,78),
+(NULL,'Gavi','Pablo','ESP','CM','Barcelona','barca.png','gavi.jpg',80,75,88),
+(NULL,'Pedri','Gonzalez','ESP','CM','Barcelona','barca.png','deJong.jpg',82,70,90),
+(NULL,'Ronald','Araujo','URU','CB','Barcelona','barca.png','araujo.jpg',65,90,75),
+(NULL,'Jules','Kounde','FRA','RB','Barcelona','barca.png','kounde.jpg',72,85,78),
+(NULL,'Raphinha','Raphi','BRA','RW','Barcelona','barca.png','raphinha.jpg',85,60,82),
+(NULL,'Fermin','Lopez','ESP','CM','Barcelona','barca.png','fermin.jpg',78,70,80),
+(NULL,'Lamine','Yamal','ESP','RW','Barcelona','barca.png','yamal.jpg',88,55,85),
+
+(NULL,'Bukayo','Saka','ENG','RW','Arsenal','arsenal.png','saka.jpg',88,65,85),
+(NULL,'Martin','Odegaard','NOR','AM','Arsenal','arsenal.png','odegaard.jpg',86,65,90),
+(NULL,'Declan','Rice','ENG','CDM','Arsenal','arsenal.png','rice.jpg',78,88,84),
+(NULL,'William','Saliba','FRA','CB','Arsenal','arsenal.png','saliba.jpg',60,92,78),
+(NULL,'Gabriel','Martinelli','BRA','LW','Arsenal','arsenal.png','martinelli.jpg',87,60,80),
+(NULL,'David','Raya','ESP','GK','Arsenal','arsenal.png','raya.jpg',35,90,55),
+
+(NULL,'Mohamed','Salah','EGY','RW','Liverpool','liverpool.png','salah.jpg',92,55,88),
+(NULL,'Virgil','van Dijk','NED','CB','Liverpool','liverpool.png','vanDijk.jpg',70,92,82),
+(NULL,'Alexis','Mac Allister','ARG','CM','Liverpool','liverpool.png','macAllister.jpg',82,75,88),
+(NULL,'Ryan','Gravenberch','NED','CM','Liverpool','liverpool.png','gravenberch.jpg',80,70,82),
+(NULL,'Marcus','Rashford','ENG','LW','Manchester United','liverpool.png','rashford.jpg',86,55,78),
+
+(NULL,'Harry','Kane','ENG','ST','Bayern Munich','bayern.png','kane.jpg',92,55,82),
+(NULL,'Joshua','Kimmich','GER','CDM','Bayern Munich','bayern.png','kimmich.jpg',82,88,90),
+(NULL,'Leon','Goretzka','GER','CM','Bayern Munich','bayern.png','goretzka.jpg',85,82,80),
+(NULL,'Serge','Gnabry','GER','RW','Bayern Munich','bayern.png','gnabry.jpg',88,60,82),
+(NULL,'Manuel','Neuer','GER','GK','Bayern Munich','bayern.png','neuer.jpg',30,92,55),
+(NULL,'Michael','Olise','FRA','RW','Bayern Munich','bayern.png','olise.jpg',86,55,84),
+
+(NULL,'Erling','Haaland','NOR','ST','Manchester City','bayern.png','haland.jpg',95,55,78),
+(NULL,'Victor','Gyokeres','SWE','ST','Sporting CP','barca.png','gyokares.jpg',88,60,75),
+(NULL,'Khvicha','Kvaratskhelia','GEO','LW','Napoli','barca.png','kvara.jpg',90,60,85),
+(NULL,'Randal','Kolo Doue','FRA','RW','PSG','psg.png','doue.jpg',85,55,80),
+(NULL,'Giorgi','Mamardashvili','GEO','GK','Valencia','barca.png','mamardashvili.jpg',25,90,50);
 
 -- ========================
 -- USERS DATA (דוגמה)
@@ -65,10 +115,10 @@ INSERT INTO players VALUES (NULL, 'Jude','Bellingham','ENG','CM','Real Madrid','
 ---- USER ↔ PLAYER LINKS
 ---- ========================
 ---- liran בחר את Jordi Alba (id = 1)
-INSERT INTO user_players (user_id, player_id) VALUES
-(1, 1);
-INSERT INTO user_players (user_id, player_id) VALUES
-(1, 2);
+--INSERT INTO user_players (user_id, player_id) VALUES
+--(1, 1);
+--INSERT INTO user_players (user_id, player_id) VALUES
+--(1, 2);
 ---- jeremy גם בחר את Jordi Alba
 --INSERT INTO user_players (user_id, player_id) VALUES
 --(2, 1);

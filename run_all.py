@@ -7,14 +7,14 @@ def run_server():
     """מריץ את השרת בחלון נפרד"""
     print("🚀 Starting server...")
     if sys.platform.startswith("win"):
-        subprocess.Popen(["start", "cmd", "/k", "python server.py"], shell=True)
+        subprocess.Popen(["start", "cmd", "/k", "python server/server.py"], shell=True)
     else:
-        subprocess.Popen(["python3", "server.py"])
+        subprocess.Popen(["python3", "server/server.py"])
 
 def run_client_app():
     """מריץ את האפליקציה הראשית (FUTRADE)"""
     print("🪟 Launching FUTRADE app...")
-    os.system("python welcome_screen.py")
+    os.system("python client/welcome_screen.py")
 
 if __name__ == "__main__":
     run_server()

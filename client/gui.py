@@ -4,6 +4,7 @@ from client import Client
 import time
 
 from formation import FormationGUI
+from market_gui import MarketGUI
 
 
 class LoginGUI:
@@ -108,7 +109,7 @@ class LoginGUI:
             response = self.client.login(username, password)
             if response == "LOGIN_SUCCESS":
                 self.root.destroy()  # סוגר את חלון הלוגין
-                MainMenuGUI(username)  # פותח את החלון החדש
+                MainMenuGUI(username,self.client)  # פותח את החלון החדש
             else:
                 messagebox.showerror("Failed", "Incorrect username or password")
         else:
@@ -121,7 +122,7 @@ class LoginGUI:
 
 
 class MainMenuGUI:
-    def __init__(self, username):
+    def __init__(self, username, client):
         self.root = tk.Tk()
         self.root.title("FUTRADE - Main Panel")
         self.root.geometry("480x520")
@@ -137,7 +138,7 @@ class MainMenuGUI:
 
         tk.Button(self.root, text="SQUAD", **btn_style, command=lambda: FormationGUI("fd")).pack(pady=15)
         tk.Button(self.root, text="B2", **btn_style, command=lambda: print("B2 Clicked")).pack(pady=15)
-        tk.Button(self.root, text="B3", **btn_style, command=lambda: print("B3 Clicked")).pack(pady=15)
+        tk.Button(self.root, text="MARKET", **btn_style, command=lambda: MarketGUI(client,username)).pack(pady=15)
 
         tk.Label(self.root, text="© 2025 FUTRADE Project", font=("Arial", 10),
                  fg="#c5c6c7", bg="#0b0c10").pack(side="bottom", pady=15)
