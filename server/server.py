@@ -97,6 +97,7 @@ class Server:
                 elif command == "MY_TEAM":
                     user_id = params[0]
 
+
                     players = DBHelper.get_user_team(user_id)
 
                     response = {
