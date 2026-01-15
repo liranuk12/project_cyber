@@ -59,7 +59,7 @@ class DBHelper:
             return False
 
     @staticmethod
-    def load_missing_players(user_id='a'):
+    def load_missing_players(user_id):
         conn = sqlite3.connect(DB_PATH)
         cursor = conn.cursor()
 
@@ -114,3 +114,47 @@ class DBHelper:
         except Exception as e:
             print("DB buy_player error:", e)
             return False
+
+    @staticmethod
+    def get_user_team(user_id):
+        conn = sqlite3.connect(DB_PATH)
+        cursor = conn.cursor()
+
+        cursor.execute("""
+            SELECT p.id, p.first_name, p.last_name, p.position, p.club
+            FROM players p
+            JOIN user_players up ON p.id = up.player_id
+            WHERE up.user_id = ?
+        """, (user_id,))
+
+        rows = cursor.fetchall()
+        conn.close()
+
+        return [
+            {
+                "id": r[0],
+                "first_name": r[1],
+                "last_name": r[2],
+                "position": r[3],
+                "club": r[4]
+            }
+            for r in rows
+        ]
+
+    @staticmethod
+    def get_player_image_name(player_id):
+        conn = sqlite3.connect(DB_PATH)
+        cursor = conn.cursor()
+
+        cursor.execute(
+            "SELECT photo FROM players WHERE id = ?",
+            (player_id,)
+        )
+
+        row = cursor.fetchone()
+        conn.close()
+
+        if row and row[0]:
+            return row[0]
+
+        return "default.jpg"

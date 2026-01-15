@@ -3,7 +3,7 @@ from tkinter import messagebox
 
 
 class MarketGUI:
-    def __init__(self, client, user_id="a"):
+    def __init__(self, client, user_id):
         self.user_id = user_id
         self.client = client
 

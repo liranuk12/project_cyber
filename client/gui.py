@@ -136,7 +136,7 @@ class MainMenuGUI:
         btn_style = dict(font=("Arial", 16, "bold"), bg="#1f2833",
                          fg="#00ff7f", relief="flat", width=18, height=2)
 
-        tk.Button(self.root, text="SQUAD", **btn_style, command=lambda: FormationGUI("fd")).pack(pady=15)
+        tk.Button(self.root, text="SQUAD", **btn_style, command=lambda: FormationGUI(client, username)).pack(pady=15)
         tk.Button(self.root, text="B2", **btn_style, command=lambda: print("B2 Clicked")).pack(pady=15)
         tk.Button(self.root, text="MARKET", **btn_style, command=lambda: MarketGUI(client,username)).pack(pady=15)
 

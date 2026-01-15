@@ -1,5 +1,7 @@
 import json
+import os
 import socket
+import struct
 import threading
 import sqlite3
 import hashlib
@@ -53,7 +55,9 @@ class Server:
                         conn.sendall(b"SIGNUP_FAILED")
 
                 elif command == "MARKET":
-                    players = DBHelper.load_missing_players()
+                    user_id = params[0]
+
+                    players = DBHelper.load_missing_players(user_id)
 
                     response = {
                         "status": "OK",
@@ -63,6 +67,24 @@ class Server:
                     json_data = json.dumps(response)
                     conn.sendall(json_data.encode())
 
+
+                elif command == "GET_PLAYER_IMAGE":
+                    player_id = int(params[0])
+
+                    image_name = DBHelper.get_player_image_name(player_id)
+                    image_path = os.path.join("players_pics", image_name)
+
+                    try:
+                        with open(image_path, "rb") as f:
+                            image_bytes = f.read()
+                    except:
+                        with open("players_pics/default.jpg", "rb") as f:
+                            image_bytes = f.read()
+
+                    # שולחים קודם אורך, ואז תוכן
+                    conn.sendall(struct.pack(">I", len(image_bytes)))
+                    conn.sendall(image_bytes)
+
                 elif command == "BUY_PLAYER":
                     user_id, player_id = params
                     success = DBHelper.buy_player(user_id, int(player_id))
@@ -71,6 +93,19 @@ class Server:
                         conn.sendall(b"BUY_SUCCESS")
                     else:
                         conn.sendall(b"BUY_FAILED")
+
+                elif command == "MY_TEAM":
+                    user_id = params[0]
+
+                    players = DBHelper.get_user_team(user_id)
+
+                    response = {
+                        "status": "OK",
+                        "players": players
+                    }
+
+                    conn.sendall(json.dumps(response).encode())
+
 
 
 
