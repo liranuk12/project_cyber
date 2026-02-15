@@ -121,7 +121,7 @@ class DBHelper:
         cursor = conn.cursor()
 
         cursor.execute("""
-            SELECT p.id, p.first_name, p.last_name, p.position, p.club
+            SELECT p.id, p.first_name, p.last_name, p.position, p.club, p.attack, p.defense,p.possession
             FROM players p
             JOIN user_players up ON p.id = up.player_id
             WHERE up.user_id = ?
@@ -136,7 +136,10 @@ class DBHelper:
                 "first_name": r[1],
                 "last_name": r[2],
                 "position": r[3],
-                "club": r[4]
+                "club": r[4],
+                "attack": r[5],
+                "defense": r[6],
+                "possession": r[7],
             }
             for r in rows
         ]
