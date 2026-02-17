@@ -80,5 +80,24 @@ class Client:
 
         return response.get("players", [])
 
+    def replace_player_in_formation(self, user_id,old_player_id, new_player_id):
+        msg=f"REPLACE_PLAYER|{user_id}|{old_player_id}|{new_player_id}"
+        self.client_socket.sendall(msg.encode())
+        data = self.client_socket.recv(1024).decode()
+        response = json.loads(data)
+        if response.get("status"):
+            return True
+        else:
+            return False
+    def insert_player_in_formation(self,user_id, new_player_id):
+        msg = f"INSERT_PLAYER|{user_id}|{new_player_id}"
+        self.client_socket.sendall(msg.encode())
+        data = self.client_socket.recv(1024).decode()
+        response = json.loads(data)
+        if response.get("status"):
+            return True
+        else:
+            return False
+
     def close(self):
         self.client_socket.close()

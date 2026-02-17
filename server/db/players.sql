@@ -61,7 +61,7 @@ INSERT INTO players VALUES
 
 (NULL,'Jude','Bellingham','ENG','CM','Real Madrid','real_madrid.png','bellingham.jpg',90,70,86),
 (NULL,'Federico','Valverde','URU','CM','Real Madrid','real_madrid.png','valverde.jpg',85,80,84),
-(NULL,'Arda','Guler','TUR','AM','Real Madrid','real_madrid.png','guler.jpg',82,55,83),
+(NULL,'Arda','Guler','TUR','CAM','Real Madrid','real_madrid.png','guler.jpg',82,55,83),
 (NULL,'Thibaut','Courtois','BEL','GK','Real Madrid','real_madrid.png','courtois.jpg',30,95,50),
 
 (NULL,'Kylian','Mbappe','FRA','ST','PSG','psg.png','mbappe.jpg',95,45,88),
@@ -79,7 +79,7 @@ INSERT INTO players VALUES
 (NULL,'Lamine','Yamal','ESP','RW','Barcelona','barca.png','yamal.jpg',88,55,85),
 
 (NULL,'Bukayo','Saka','ENG','RW','Arsenal','arsenal.png','saka.jpg',88,65,85),
-(NULL,'Martin','Odegaard','NOR','AM','Arsenal','arsenal.png','odegaard.jpg',86,65,90),
+(NULL,'Martin','Odegaard','NOR','CAM','Arsenal','arsenal.png','odegaard.jpg',86,65,90),
 (NULL,'Declan','Rice','ENG','CDM','Arsenal','arsenal.png','rice.jpg',78,88,84),
 (NULL,'William','Saliba','FRA','CB','Arsenal','arsenal.png','saliba.jpg',60,92,78),
 (NULL,'Gabriel','Martinelli','BRA','LW','Arsenal','arsenal.png','martinelli.jpg',87,60,80),
@@ -157,7 +157,7 @@ INSERT INTO players VALUES
 --INSERT INTO players VALUES ('Serge','Gnabry','GER','RW','Bayern Munich','bayern.png','gnabry.jpg',84,58,73);
 --INSERT INTO players VALUES ('Leon','Goretzka','GER','CM','Bayern Munich','bayern.png','goretzka.jpg',78,78,72);
 --INSERT INTO players VALUES ('Ryan','Gravenberch','NED','CM','Bayern Munich','bayern.png','gravenberch.jpg',77,65,78);
---INSERT INTO players VALUES ('Arda','Güler','TUR','AM','Real Madrid','real_madrid.png','guler.jpg',76,40,77);
+--INSERT INTO players VALUES ('Arda','Güler','TUR','CAM','Real Madrid','real_madrid.png','guler.jpg',76,40,77);
 --INSERT INTO players VALUES ('Arthur','Gyökeres','SWE','ST','gyokares.jpg',82,42,66);
 --INSERT INTO players VALUES ('Erling','Haaland','NOR','ST','Manchester City','haland.jpg',96,40,68);
 --INSERT INTO players VALUES ('Harry','Kane','ENG','ST','Bayern Munich','bayern.png','kane.jpg',93,48,70);
@@ -176,7 +176,7 @@ INSERT INTO players VALUES
 --INSERT INTO players VALUES ('Rúben','Mendes','POR','LB','Paris Saint-Germain','psg.png','mendes.jpg',72,75,74);
 --INSERT INTO players VALUES ('Lionel','Messi','ARG','RW','Inter Miami','miami.png','messi.jpg',94,58,90);
 --INSERT INTO players VALUES ('Manuel','Neuer','GER','GK','Bayern Munich','bayern.png','neuer.jpg',20,90,30);
---INSERT INTO players VALUES ('Martin','Ødegaard','NOR','AM','Arsenal','arsenal.png','odegaard.jpg',82,45,88);
+--INSERT INTO players VALUES ('Martin','Ødegaard','NOR','CAM','Arsenal','arsenal.png','odegaard.jpg',82,45,88);
 --INSERT INTO players VALUES ('Michael','Olise','FRA','RW','olise.jpg',80,45,78);
 --INSERT INTO players VALUES ('Raphinha','(duplicate)','BRA','RW','Barcelona','barca.png','raphinha.jpg',85,46,76);
 --INSERT INTO players VALUES ('Marcus','Rashford','ENG','LW','Manchester United','rashford.jpg',86,46,77);
@@ -190,4 +190,4 @@ INSERT INTO players VALUES
 --INSERT INTO players VALUES ('Federico','Valverde','URY','CM','Real Madrid','real_madrid.png','valverde.jpg',84,78,83);
 --INSERT INTO players VALUES ('Virgil','van Dijk','NED','CB','Liverpool','liverpool.png','vanDijk.jpg',60,92,66);
 --INSERT INTO players VALUES ('Vitinha','Vitinha','PRT','CM','Paris Saint-Germain','psg.png','vitinha.jpg',78,56,80);
---INSERT INTO players VALUES ('Yamal','Yamal','ESP','AM','yamal.jpg',75,45,78);
+--INSERT INTO players VALUES ('Yamal','Yamal','ESP','CAM','yamal.jpg',75,45,78);

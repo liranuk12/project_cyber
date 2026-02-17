@@ -11,12 +11,24 @@ class DBHelper:
     def setup_database():
         conn = sqlite3.connect(DB_PATH)
         c = conn.cursor()
+        c.execute('''CREATE TABLE IF NOT EXISTS users (
+                                username TEXT PRIMARY KEY,
+                                password TEXT NOT NULL)''')
+
+
         c.execute("""
-            CREATE TABLE IF NOT EXISTS users (
-                username TEXT PRIMARY KEY,
-                password TEXT NOT NULL
-            )
+                    CREATE TABLE IF NOT EXISTS teams (
+                        user_id INTEGER NOT NULL,
+                        player_id INTEGER NOT NULL,
+                        is_field_player BOOLEAN NOT NULL
+                    )
+                """)
+
+        c.execute("""
+                    UPDATE players SET position="RCB" WHERE id=29;
+        
         """)
+
         conn.commit()
         conn.close()
 
@@ -68,7 +80,7 @@ class DBHelper:
             FROM players
             WHERE id NOT IN (
                 SELECT player_id
-                FROM user_players
+                FROM teams
                 WHERE user_id = ?
             )
         """, (user_id,))
@@ -89,62 +101,6 @@ class DBHelper:
         return players_json
 
     @staticmethod
-    def buy_player(user_id, player_id) -> bool:
-        """
-        Inserts (user_id, player_id) into user_players table
-        Returns True if success, False if already owned or error
-        """
-        try:
-            conn = sqlite3.connect(DB_PATH)
-            cursor = conn.cursor()
-
-            cursor.execute("""
-                   INSERT INTO user_players (user_id, player_id)
-                   VALUES (?, ?)
-               """, (user_id, player_id))
-
-            conn.commit()
-            conn.close()
-            return True
-
-        except sqlite3.IntegrityError:
-            # שגיאה אם המשתמש כבר קנה את השחקן - לא אמור לקרות כי בחלון הוא בחר מרשימה של שחקנים שאין לו
-            return False
-
-        except Exception as e:
-            print("DB buy_player error:", e)
-            return False
-
-    @staticmethod
-    def get_user_team(user_id):
-        conn = sqlite3.connect(DB_PATH)
-        cursor = conn.cursor()
-
-        cursor.execute("""
-            SELECT p.id, p.first_name, p.last_name, p.position, p.club, p.attack, p.defense,p.possession
-            FROM players p
-            JOIN user_players up ON p.id = up.player_id
-            WHERE up.user_id = ?
-        """, (user_id,))
-
-        rows = cursor.fetchall()
-        conn.close()
-
-        return [
-            {
-                "id": r[0],
-                "first_name": r[1],
-                "last_name": r[2],
-                "position": r[3],
-                "club": r[4],
-                "attack": r[5],
-                "defense": r[6],
-                "possession": r[7],
-            }
-            for r in rows
-        ]
-
-    @staticmethod
     def get_player_image_name(player_id):
         conn = sqlite3.connect(DB_PATH)
         cursor = conn.cursor()
@@ -161,3 +117,112 @@ class DBHelper:
             return row[0]
 
         return "default.jpg"
+
+    @staticmethod
+    def buy_player(user_id, player_id) -> bool:
+        """
+        Inserts (user_id, player_id) into user_players table
+        Returns True if success, False if already owned or error
+        """
+        try:
+            conn = sqlite3.connect(DB_PATH)
+            cursor = conn.cursor()
+
+            cursor.execute("""
+                   INSERT INTO teams (user_id, player_id,is_field_player)
+                   VALUES (?, ?,FALSE)
+               """, (user_id, player_id))
+
+            conn.commit()
+            conn.close()
+            return True
+
+        except sqlite3.IntegrityError as e:
+            print("DB buy_player error:", e)
+            # שגיאה אם המשתמש כבר קנה את השחקן - לא אמור לקרות כי בחלון הוא בחר מרשימה של שחקנים שאין לו
+            return False
+
+        except Exception as e:
+            print("DB buy_player error:", e)
+            return False
+
+    @staticmethod
+    def get_user_team(user_id):
+        conn = sqlite3.connect(DB_PATH)
+        cursor = conn.cursor()
+
+        cursor.execute("""
+            SELECT p.id, p.first_name, p.last_name, p.position, p.club, p.attack, p.defense,p.possession,up.is_field_player
+            FROM players p
+            JOIN teams up ON p.id = up.player_id
+            WHERE up.user_id = ?
+        """, (user_id,))
+
+        rows = cursor.fetchall()
+        conn.close()
+        print (rows)
+
+        return [
+            {
+                "id": r[0],
+                "first_name": r[1],
+                "last_name": r[2],
+                "position": r[3],
+                "club": r[4],
+                "attack": r[5],
+                "defense": r[6],
+                "possession": r[7],
+                "is_field_player":False if r[8] == 0 else True
+            }
+            for r in rows
+        ]
+    @staticmethod
+    def replace_player(user_id, new_player_id, old_player_id):
+        conn = sqlite3.connect(DB_PATH)
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute(f"""
+                UPDATE teams SET is_field_player = false WHERE user_id = "{user_id}" AND player_id = "{old_player_id}"
+            """)
+
+            cursor.execute(f"""
+                    UPDATE teams SET is_field_player = true WHERE user_id = "{user_id}" AND player_id = "{new_player_id}"
+                """)
+
+        except sqlite3.IntegrityError as e:
+            print("DB replace_player error:", e)
+            conn.commit()
+            conn.close()
+            return False
+
+        print("old player id:", old_player_id)
+        print("new player id:", new_player_id)
+        conn.commit()
+        conn.close()
+        return True
+
+    @staticmethod
+    def insert_player(user_id, new_player_id):
+        conn = sqlite3.connect(DB_PATH)
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute(f"""
+                        UPDATE teams SET is_field_player = true WHERE user_id = "{user_id}" AND player_id = "{new_player_id}"
+                    """)
+
+        except sqlite3.IntegrityError as e:
+            print("DB replace_player error:", e)
+            conn.commit()
+            conn.close()
+            return False
+
+        print("new player id:", new_player_id)
+        conn.commit()
+        conn.close()
+        return True
+
+
+
+

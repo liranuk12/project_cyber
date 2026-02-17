@@ -22,13 +22,7 @@ class Server:
 
     def setup_database(self):
         """יוצר את טבלת המשתמשים במסד הנתונים"""
-        conn = sqlite3.connect("db/users.db")
-        c = conn.cursor()
-        c.execute('''CREATE TABLE IF NOT EXISTS users (
-                        username TEXT PRIMARY KEY,
-                        password TEXT NOT NULL)''')
-        conn.commit()
-        conn.close()
+        DBHelper.setup_database()
 
     def handle_client(self, conn, addr):
         print(f"🟢 New connection from {addr}")
@@ -58,7 +52,7 @@ class Server:
                     user_id = params[0]
 
                     players = DBHelper.load_missing_players(user_id)
-
+                    
                     response = {
                         "status": "OK",
                         "players": players
@@ -107,8 +101,23 @@ class Server:
 
                     conn.sendall(json.dumps(response).encode())
 
+                elif command == "REPLACE_PLAYER":
+                    user_id = params[0]
+                    old_player_id = params[1]
+                    new_player_id = params[2]
+                    
+                    status = DBHelper.replace_player(user_id, new_player_id, old_player_id)
+                    response = {"status": status}
+                    conn.sendall(json.dumps(response).encode())
 
+                elif command == "INSERT_PLAYER":
+                    user_id = params[0]
+                    new_player_id = params[1]
 
+                    status = DBHelper.insert_player(user_id,new_player_id)
+                    response = {"status": status}
+                    conn.sendall(json.dumps(response).encode())
+                
 
                 else:
                     conn.sendall(b"UNKNOWN_COMMAND")
