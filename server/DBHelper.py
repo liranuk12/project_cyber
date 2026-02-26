@@ -1,4 +1,5 @@
 # קובץ זה מכיל פעולות סטטיות בהן השרת משתמש לשלוף או לעדכן מידע מה-DB
+import random
 
 DB_PATH = "db/users.db"
 
@@ -223,6 +224,27 @@ class DBHelper:
         conn.close()
         return True
 
+    @staticmethod
+    def open_pack(requirement_type, requirement_stat):
+        conn = sqlite3.connect(DB_PATH)
+        cursor = conn.cursor()
+        print(f"finding all player with {requirement_type} >= {requirement_stat}")
+        try:
+            cursor.execute(f"""
+                                SELECT id FROM players WHERE {requirement_type} >= "{requirement_stat}"
+                            """)
+            rows = cursor.fetchall()
+            print("rows:", rows)
+
+            random_player_id = random.choice(rows)
+            print("random_player_id:", random_player_id[0])
+            return random_player_id[0]
+
+        except Exception as e:
+            print("DB open_pack error:", e)
+            conn.commit()
+            conn.close()
+            return False
 
 
 

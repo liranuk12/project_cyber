@@ -1,0 +1,21 @@
+{
+  "silver_pack": {
+    "image": "/packs/pack-silver.png",
+    "name": "Silver Pack",
+    "description": "80+ attack",
+    "requirement": ["attack",80]
+  },
+  "gold_pack": {
+    "image": "/packs/pack-gold.png",
+    "name": "Gold Pack",
+    "description": "85+ possession",
+    "requirement": ["possession",80]
+  },
+  "legendary_pack": {
+    "image": "/packs/pack-legendary.png",
+    "name": "Legendary Pack",
+    "description": "80+ defense",
+    "requirement": ["defense",80]
+  }
+
+}

@@ -99,5 +99,16 @@ class Client:
         else:
             return False
 
+    def open_pack(self,user_id,pack_requirement):
+        msg = f"OPEN_PACK|{user_id}|{pack_requirement[0]}|{pack_requirement[1]}"
+        self.client_socket.sendall(msg.encode())
+        data = self.client_socket.recv(1024).decode()
+        response = json.loads(data)
+        if response.get("status"):
+            return True
+        else:
+            return False
+
+
     def close(self):
         self.client_socket.close()

@@ -117,7 +117,16 @@ class Server:
                     status = DBHelper.insert_player(user_id,new_player_id)
                     response = {"status": status}
                     conn.sendall(json.dumps(response).encode())
-                
+                elif command == "OPEN_PACK":
+                    print("received OPEN_PACK command")
+                    user_id = params[0]
+                    requirement_type = params[1]
+                    requirement_stat = params[2]
+                    random_player_id = DBHelper.open_pack(requirement_type, requirement_stat)
+                    status = DBHelper.buy_player(user_id,random_player_id)
+                    response = {"status": status}
+                    conn.sendall(json.dumps(response).encode())
+
 
                 else:
                     conn.sendall(b"UNKNOWN_COMMAND")

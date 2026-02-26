@@ -3,6 +3,7 @@ from tkinter import messagebox
 from client import Client
 import time
 
+from Packs import PacksScreen
 from formation import FormationGUI
 from market_gui import MarketGUI
 
@@ -137,7 +138,7 @@ class MainMenuGUI:
                          fg="#00ff7f", relief="flat", width=18, height=2)
 
         tk.Button(self.root, text="SQUAD", **btn_style, command=lambda: FormationGUI(client, username)).pack(pady=15)
-        tk.Button(self.root, text="B2", **btn_style, command=lambda: print("B2 Clicked")).pack(pady=15)
+        tk.Button(self.root, text="PACKS", **btn_style, command=lambda: PacksScreen(client,username)).pack(pady=15)
         tk.Button(self.root, text="MARKET", **btn_style, command=lambda: MarketGUI(client,username)).pack(pady=15)
 
         tk.Label(self.root, text="© 2025 FUTRADE Project", font=("Arial", 10),
