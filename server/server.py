@@ -124,7 +124,10 @@ class Server:
                     requirement_stat = params[2]
                     random_player_id = DBHelper.open_pack(requirement_type, requirement_stat)
                     status = DBHelper.buy_player(user_id,random_player_id)
-                    response = {"status": status}
+                    if status:
+                        response = {"status": status, "player_img": DBHelper.get_player_image_name(random_player_id),"player_name":DBHelper.get_player_name(random_player_id)}
+                    else:
+                        response = {"status": status}
                     conn.sendall(json.dumps(response).encode())
 
 

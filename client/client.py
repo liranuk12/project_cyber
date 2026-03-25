@@ -105,9 +105,9 @@ class Client:
         data = self.client_socket.recv(1024).decode()
         response = json.loads(data)
         if response.get("status"):
-            return True
+            return response["player_img"],response["player_name"]
         else:
-            return False
+            return None,None
 
 
     def close(self):

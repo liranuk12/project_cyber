@@ -246,5 +246,24 @@ class DBHelper:
             conn.close()
             return False
 
+    @staticmethod
+    def get_player_name(player_id):
+        conn = sqlite3.connect(DB_PATH)
+        cursor = conn.cursor()
+        print(f"finding name of player with {player_id}")
+        try:
+            cursor.execute(f"""
+                                   SELECT first_name FROM players WHERE id = "{player_id}"
+                               """)
+            player_name = cursor.fetchone()
+            print("player_name:", player_name)
+            return player_name
+
+        except Exception as e:
+            print("DB open_pack error:", e)
+            conn.commit()
+            conn.close()
+            return False
+
 
 

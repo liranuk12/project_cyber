@@ -59,6 +59,7 @@ class Pack(tk.Frame):
         print(f"opening pack {self.pack_name}")
 
         self.client.open_pack(self.username,self.pack_requirement)
+
         return
 
 
