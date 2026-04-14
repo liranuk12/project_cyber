@@ -105,10 +105,19 @@ class Client:
         data = self.client_socket.recv(1024).decode()
         response = json.loads(data)
         if response.get("status"):
-            return True
+            return response.get("player_id")
         else:
             return False
 
+    def get_player_name(self,player_id):
+        msg = f"GET_PLAYER_NAME|{player_id}"
+        self.client_socket.sendall(msg.encode())
+        data = self.client_socket.recv(1024).decode()
+        response = json.loads(data)
+        if response.get("status"):
+            return response.get("player_name")
+        else:
+            return False
 
     def close(self):
         self.client_socket.close()

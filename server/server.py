@@ -124,9 +124,21 @@ class Server:
                     requirement_stat = params[2]
                     random_player_id = DBHelper.open_pack(requirement_type, requirement_stat)
                     status = DBHelper.buy_player(user_id,random_player_id)
-                    response = {"status": status}
+                    if status:
+                        response = {"status": True,"player_id": random_player_id}
+                    else:
+                        response = {"status": False}
                     conn.sendall(json.dumps(response).encode())
 
+                elif command == "GET_PLAYER_NAME":
+                    print("received GET_PLAYER_NAME command")
+                    player_id = params[0]
+                    db_response = DBHelper.get_player_name(player_id)
+                    if db_response!= False:
+                        response = {"status": True,"player_name": db_response}
+                    else:
+                        response = {"status": False}
+                    conn.sendall(json.dumps(response).encode())
 
                 else:
                     conn.sendall(b"UNKNOWN_COMMAND")

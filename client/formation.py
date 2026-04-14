@@ -31,6 +31,7 @@ class FormationGUI:
         # scale יחסי למסך 1080p
         self.scale = (screen_h / 1080) / 1.2
 
+
         # ===== כותרת =====
         tk.Label(
             self.root,
@@ -168,7 +169,6 @@ class FormationGUI:
     def load_player_image(self, player_id):
         base_size = 150
         size = int(base_size * self.scale)
-
         img = self.client.get_player_image(player_id)
         img = img.resize((size, size))
         return ImageTk.PhotoImage(img)
